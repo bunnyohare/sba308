@@ -100,16 +100,26 @@ const CourseInfo = {
 
 
     //console.log(studentIDs.size);
+    const studentGrades = [];
+    const students = Array.from(studentIDs);
+    students.forEach(student => {
+      let addID = {
+      "id" : student
+      }
+      studentGrades.push(addID);
 
-    const students = Array.from(studentIDs); 
+    });
 
-    function setID(item, index) {
-      var addedIndex = "id: " + item;
-      return addedIndex;
-    }
-    const studentGrades = students.map(setID);
+  console.log(studentGrades)
+
+    // function setID(item, index) {
+    //   var addedIndex = "id: " + item;
+    //   return addedIndex;
+    // }
+    // const studentGrades = students.map(setID);
     
-    console.log(studentGrades);
+
+    // console.log(studentGrades);
     
     //
 
