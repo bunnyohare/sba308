@@ -91,7 +91,6 @@ function getStudentIds(submissions){
     }
     studentGrades.push(addID);
   });
-console.log(studentGrades)
 return studentGrades;
 }
 
@@ -103,7 +102,6 @@ function getSubmissionsByID(studentGrades, submissions){
     let subA = submission.assignment_id;
     let subS = submission.submission.score;
     if (subID == stuID){
-    console.log(typeof(subA))
     let grade = {
       }
     grade[subA] = subS;
