@@ -98,7 +98,18 @@ const CourseInfo = {
         studentIDs.add(submissions.learner_id)
     });
 
-    console.log(studentIDs);
+
+    //console.log(studentIDs.size);
+
+    const students = Array.from(studentIDs); 
+
+    function setID(item, index) {
+      var addedIndex = "id: " + item;
+      return addedIndex;
+    }
+    const studentGrades = students.map(setID);
+    
+    console.log(studentGrades);
     
     //
 
