@@ -117,7 +117,7 @@ function getLearnerData(course, ag, submissions) {
 
 studentGrades = getStudentIds(submissions);
 studentGrades = getSubmissionsByID(studentGrades, submissions);
-console.log(studentGrades);
+
 
 
 
