@@ -110,9 +110,26 @@ function getSubmissionsByID(studentGrades, submissions) {
   return studentGrades;
 }
 
+function validAssignmentCheck(ag) {
+  const todayS = "2024-02-21";
+  const today = new Date(todayS);
+  const items = [];
+  for (let i = 0; i < ag.assignments.length; i++) {
+    let inputDate = new Date(ag.assignments[i].due_at);
+    if (inputDate <= today) {
+      items.push(ag.assignments[i].id)
+    } else {
+      continue;
+    }
+  }
+  return items;
+}
+
+
 function getLearnerData(course, ag, submissions) {
   studentGrades = getStudentIds(submissions);
   studentGrades = getSubmissionsByID(studentGrades, submissions);
+  assignmentsInRange = validAssignmentCheck(ag);
   return studentGrades;
 }
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
