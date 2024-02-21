@@ -77,12 +77,14 @@ const LearnerSubmissions = [
 ];
 
 function getStudentIds(submissions) {
+  // pull out unique student ids usng Set.
   const studentIDs = new Set();
 
   submissions.forEach((submissions) => {
     studentIDs.add(submissions.learner_id);
   });
 
+  // convert studentID from object to array
   const studentGrades = [];
   const students = Array.from(studentIDs);
   students.forEach((student) => {
@@ -109,9 +111,12 @@ function getSubmissionsByID(studentGrades, submissions, assignmentsAG) {
       let currentAssignment = findAssignment.find(({id}) => id == submissionAssignment);
       // find the Assigned point value for the submitted task
       let assignmentPoints = currentAssignment.points_possible
-
+      // get submission score
       let submissionScore = submission.submission.score;
+      // calculate raw score.  Doesn't factor missed deadlines, or weighted value.
       let rawScore = submissionScore/assignmentPoints
+
+      // checks to see if submitted tasks belonged to the given student.
 
       if (submissionID == studentID) {
         studentGrades[i][submissionAssignment] = rawScore;
@@ -126,6 +131,8 @@ function validAssignmentCheck(ag) {
   const todayS = "2024-02-21";
   const today = new Date(todayS);
   const items = [];
+
+  // loop through the assignemnts to find valid assignments, doesn't work quite right.
   for (let i = 0; i < ag.assignments.length; i++) {
     let inputDate = new Date(ag.assignments[i].due_at);
     if (inputDate <= today) {
@@ -134,9 +141,7 @@ function validAssignmentCheck(ag) {
       continue;
     }
   }
- 
-
-  return items;
+   return items;
 }
 
 
