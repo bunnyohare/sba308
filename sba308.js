@@ -93,23 +93,35 @@ function getStudentIds(submissions) {
   });
   return studentGrades;
 }
-
-function getSubmissionsByID(studentGrades, submissions) {
+// 
+function getSubmissionsByID(studentGrades, submissions, assignmentsAG) {
   for (let i = 0; i < studentGrades.length; i++) {
     submissions.forEach((submission) => {
-      let subID = submission.learner_id;
-      let stuID = studentGrades[i].id;
-      let subA = submission.assignment_id;
-      let subS = submission.submission.score;
+      // student id per submitted task
+      let submissionID = submission.learner_id;
+      // student id in array of studentGrades
+      let studentID = studentGrades[i].id;
+      // get id of the assignment from the submitted data
+      let submissionAssignment = submission.assignment_id;
+      // group of all assignments 
+      let findAssignment = assignmentsAG.assignments;
+      // find the Assgnment info on the submitted task
+      let currentAssignment = findAssignment.find(({id}) => id == submissionAssignment);
+      // find the Assigned point value for the submitted task
+      let assignmentPoints = currentAssignment.points_possible
 
-      if (subID == stuID) {
-        studentGrades[i][subA] = subS;
+      let submissionScore = submission.submission.score;
+      let rawScore = submissionScore/assignmentPoints
+
+      if (submissionID == studentID) {
+        studentGrades[i][submissionAssignment] = rawScore;
       }
     });
   }
   return studentGrades;
 }
 
+// checks to see if Assignment is due yet
 function validAssignmentCheck(ag) {
   const todayS = "2024-02-21";
   const today = new Date(todayS);
@@ -122,13 +134,15 @@ function validAssignmentCheck(ag) {
       continue;
     }
   }
+ 
+
   return items;
 }
 
 
 function getLearnerData(course, ag, submissions) {
   studentGrades = getStudentIds(submissions);
-  studentGrades = getSubmissionsByID(studentGrades, submissions);
+  studentGrades = getSubmissionsByID(studentGrades, submissions, ag)
   assignmentsInRange = validAssignmentCheck(ag);
   return studentGrades;
 }
